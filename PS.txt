@@ -1,0 +1,55 @@
+Dear Students,
+
+Congratulations on making it to the task-based selection round for the Data Science Intern role at Buckman!
+
+As part of this round, you will be required to build a Retrieval-Augmented Generation (RAG)-based chatbot that can answer user queries by retrieving relevant information from a given set of documents.
+
+Task Details:
+
+The chatbot should process and extract information from multiple document types:
+PDF, DOCX, CSV → Sample files will be provided.
+Image and Video → You are required to choose your own dataset and build the logic/model for processing these formats.
+The chatbot should return accurate and relevant answers based on the user's queries.
+Bonus points if you do not use the LangChain framework.
+
+Evaluation Criteria:
+
+Accuracy & Relevance: How well the chatbot retrieves and generates responses.
+Model Architecture: Efficient implementation and logical structuring.
+Handling of Different Formats: Proper parsing and information extraction.
+Creativity & Optimization: Efficient use of techniques for better performance.
+Submission Deadline: 25 March 2025 (Tuesday - 5 pm)
+Submission Format: Code, PPT/Word
+
+ 
+We look forward to seeing your innovative solutions!
+
+If you have any questions, feel free to reach out.
+
+ 
+Regards,
+
+Ramaswamy Ganapathy
+Sr. Data Science Engineer
+
+
+Buckman Digital
+Chemistry, connected.
+
+"22pd02@psgtech.ac.in" <22pd02@psgtech.ac.in>,
+"22pd17@psgtech.ac.in" <22pd17@psgtech.ac.in>,
+"22pd08@psgtech.ac.in" <22pd08@psgtech.ac.in>,
+"22pd34@psgtech.ac.in" <22pd34@psgtech.ac.in>,
+"22pd26@psgtech.ac.in" <22pd26@psgtech.ac.in>,
+"22pd04@psgtech.ac.in" <22pd04@psgtech.ac.in>,
+"22pd14@psgtech.ac.in" <22pd14@psgtech.ac.in>,
+"22pd22@psgtech.ac.in" <22pd22@psgtech.ac.in>
+
+"22pt40@psgtech.ac.in" <22pt40@psgtech.ac.in>,
+"22pt27@psgtech.ac.in" <22pt27@psgtech.ac.in>,
+"22pt37@psgtech.ac.in" <22pt37@psgtech.ac.in>,
+"22pt06@psgtech.ac.in" <22pt06@psgtech.ac.in>,
+"22pt39@psgtech.ac.in" <22pt39@psgtech.ac.in>,
+
+"22pw20@psgtech.ac.in" <22pw20@psgtech.ac.in>,
+"22pw23@psgtech.ac.in" <22pw23@psgtech.ac.in>,
