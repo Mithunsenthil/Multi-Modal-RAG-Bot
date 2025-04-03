@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Video{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header" style="background-color: #fff3cd;">
+                    <h4 class="mb-0"><i class="bi bi-camera-video mr-2"></i>Upload Video</h4>
+                </div>
+                <div class="card-body">
+                    {% if status == 'success' %}
+                        <div class="alert alert-success mb-4">
+                            <i class="bi bi-check-circle mr-2"></i>
+                            {{ message }}
+                        </div>
+                        {% if video_path %}
+                            <div class="mt-4 text-center">
+                                <h5 class="mb-3">Uploaded Video:</h5>
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <video class="embed-responsive-item rounded" controls style="border: 1px solid #1A1A19; max-height: 400px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                        <source src="{{ video_path }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% elif status == 'error' %}
+                        <div class="alert alert-danger mb-4">
+                            <i class="bi bi-exclamation-triangle mr-2"></i>
+                            {{ message }}
+                        </div>
+                    {% endif %}
+
+                    <ul class="nav nav-tabs mt-4" id="videoTabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="youtube-tab" data-toggle="tab" href="#youtube" role="tab" aria-controls="youtube" aria-selected="true">
+                                <i class="bi bi-youtube mr-1"></i> YouTube URL
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="file-tab" data-toggle="tab" href="#file" role="tab" aria-controls="file" aria-selected="false">
+                                <i class="bi bi-file-earmark-play mr-1"></i> Upload File
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content mt-3" id="videoTabsContent">
+                        <!-- YouTube URL Form -->
+                        <div class="tab-pane fade show active" id="youtube" role="tabpanel" aria-labelledby="youtube-tab">
+                            <form method="post" action="{% url 'upload_video' %}">
+                                {% csrf_token %}
+                                <div class="form-group mb-4">
+                                    <label for="youtube_url" class="form-label"><i class="bi bi-link mr-1"></i> YouTube Video URL:</label>
+                                    <input type="url" class="form-control" id="youtube_url" name="youtube_url" placeholder="https://www.youtube.com/watch?v=..." required>
+                                    <small class="form-text text-muted">Enter the full URL of a YouTube video</small>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-cloud-download mr-1"></i> Process YouTube Video
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- File Upload Form -->
+                        <div class="tab-pane fade" id="file" role="tabpanel" aria-labelledby="file-tab">
+                            <form method="post" action="{% url 'upload_video' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group mb-4">
+                                    <label for="video_file" class="form-label"><i class="bi bi-file-earmark-play mr-1"></i> Select Video File:</label>
+                                    <input class="form-control" type="file" id="video_file" name="video_file" accept="video/*" required>
+                                    <small class="form-text text-muted">Supported formats: MP4, AVI, MOV, etc.</small>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-cloud-upload mr-1"></i> Upload Video
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <a href="{% url 'home' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left mr-1"></i> Back to Home
+                        </a>
+                        <a href="{% url 'chat' %}" class="btn btn-primary ml-2">
+                            <i class="bi bi-chat-dots mr-1"></i> Go to Chat
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm mt-4">
+                <div class="card-header" style="background-color: #fff3cd;">
+                    <h5 class="mb-0"><i class="bi bi-info-circle mr-2"></i>About Video Upload</h5>
+                </div>
+                <div class="card-body">
+                    <p>Upload videos or provide YouTube links to add to your knowledge base. The system will process the video content and extract information from it.</p>
+                    <p class="mb-0">After uploading, you can ask questions about the video content or request specific segments using the RAG chatbot.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script>
+    // Initialize Bootstrap 4 tabs with jQuery
+    $(document).ready(function() {
+        // This enables the tab switching functionality
+        $('#videoTabs a').on('click', function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
+</script>
+{% endblock %}

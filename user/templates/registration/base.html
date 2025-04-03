@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #DFDFD9; /* Gainsboro background */
+            color: #1A1A19; /* Eerie Black text */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .navbar {
+            background-color: #fff3cd; /* Light yellow navbar */
+            border-bottom: 1px solid #1A1A19; /* Eerie Black border */
+            font-family: 'Poppins', sans-serif; /* Custom font for navbar */
+        }
+
+        .navbar-brand, .nav-link {
+            color: #1A1A19 !important; /* Eerie Black text */
+            font-weight: 700; /* Bold text */
+            font-size: 1.1rem; /* Slightly larger font size */
+        }
+
+        .navbar-brand:hover, .nav-link:hover {
+            color: #F9BE08 !important; /* Mikado Yellow on hover */
+        }
+
+        .card {
+            background-color: #F9F8F4; /* Cultured card background */
+            color: #1A1A19; /* Eerie Black text */
+            border: 1px solid #1A1A19; /* Eerie Black border */
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+
+        .card-header {
+            background-color: #fff3cd; /* Light yellow header background */
+            border-bottom: 1px solid #1A1A19; /* Eerie Black border */
+            color: #1A1A19; /* Eerie Black text */
+        }
+
+        .btn-primary {
+            background-color: #fff3cd; /* Light yellow primary button */
+            border: none;
+            color: #1A1A19; /* Eerie Black text */
+        }
+
+        .btn-primary:hover {
+            background-color: #F9BE08; /* Mikado Yellow on hover */
+        }
+
+        .btn-secondary {
+            background-color: #DFDFD9; /* Gainsboro secondary button */
+            color: #1A1A19; /* Eerie Black text */
+            border: 1px solid #1A1A19; /* Eerie Black border */
+        }
+
+        .btn-secondary:hover {
+            background-color: #F9F8F4; /* Cultured on hover */
+        }
+
+        .form-control {
+            background-color: #F9F8F4; /* Cultured input background */
+            color: #1A1A19; /* Eerie Black text */
+            border: 1px solid #1A1A19; /* Eerie Black border */
+        }
+
+        .form-control:focus {
+            background-color: #F9F8F4; /* Cultured input background on focus */
+            border-color: #fff3cd; /* Light yellow border on focus */
+            box-shadow: 0 0 0 0.2rem rgba(255, 243, 205, 0.25); /* Light yellow glow on focus */
+        }
+
+        .comments {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chat' %}">Chat</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="uploadDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Upload
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="uploadDropdown">
+                                <a class="dropdown-item" href="{% url 'upload_pdf' %}">Upload PDF</a>
+                                <a class="dropdown-item" href="{% url 'upload_doc' %}">Upload DOC</a>
+                                <a class="dropdown-item" href="{% url 'upload_csv' %}">Upload CSV</a>
+                                <a class="dropdown-item" href="{% url 'upload_video' %}">Upload Video</a>
+                                <a class="dropdown-item" href="{% url 'upload_image' %}">Upload Image</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'edit_profile' %}">Edit Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="POST" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-secondary">Logout</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        {% block content %}
+        <!-- Default content goes here -->
+        {% endblock %}
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

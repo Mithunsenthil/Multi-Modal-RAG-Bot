@@ -1,0 +1,24 @@
+
+You: What is the relationship between "Study_Hours_per_Week" and "Total_Score" in the dataset? Are students who study more per week achieving higher total scores?
+
+AI: Based on the summary statistics, there appears to be a positive correlation between "Study_Hours_per_Week" and "Total_Score". The mean "Study_Hours_per_Week" is 17.38, and the mean "Total_Score" is 61.23. Students who study more hours per week tend to achieve higher total scores, as seen in the data where the student with the highest "Study_Hours_per_Week" (24.8) also has a high "Total_Score" (61.63).
+
+
+A data incident has four factors
+
+AI: A data incident has four factors: a threat source, a threat event, a vulnerability, and an adverse impact. The threat source refers to the entity or actor that initiates the incident. The threat event is the action or circumstance that triggers the incident. The vulnerability is the weakness or gap in security that allows the incident to occur. The adverse impact is the negative consequence or outcome of the incident.
+
+
+
+You: image of a royles royce car
+
+AI: I have image descriptions of a white Rolls-Royce convertible and a dark blue Rolls Royce Phantom coupe.
+
+Related Image: A white Rolls-Royce convertible is showcased indoors on a tiled floor.
+
+
+You: were did mitunsentil studied
+
+AI: Mithunsenthil V studied at PSG College of Technology, where he is currently pursuing a 5-year Integrated M.Sc. in Data Science at the Department of Applied Mathematics and Computational Sciences.
+
+Related: MITHUNSENTHIL V 22PD22 OBJECTIVE To obtain a position as an intern for a period of six months from May 2025 to November 2025. ACADEMIC QUALIFICATION Currently pursuing 3rd year of 5-year Integrated M.Sc. Data Science at the Department of Applied Mathematics and Computational Sciences at PSG College of Technology. SKILL SET AREAS OF INTEREST ACADEMIC RECORD INDUSTRY BASED PROJECT EXPERIENCE

@@ -1,0 +1,155 @@
+{% extends "registration/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h3>Welcome to the RAG Knowledge Assistant</h3>
+    </div>
+    <div class="card-body">
+        <p class="lead">Your intelligent document-powered assistant using Retrieval-Augmented Generation technology.</p>
+        <p>Our RAG bot helps you interact with your documents by retrieving relevant information and generating helpful responses.</p>
+        
+        <hr class="my-4">
+        
+        <h4>Known about Knowledge Base</h4>
+        <p>Find the details about the dataset in the knowledge base</p>
+        
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Students Grading Dataset [CSV File]</h4>
+            </div>
+            <div class="card-body">
+                <p>This academic dataset tracks student performance across various metrics including attendance, exam scores, and assignments. It also contains demographic data (gender, age, department) and lifestyle factors (study hours, sleep patterns, stress levels, family background). Use our chat interface to ask questions about correlations between academic performance and socioeconomic factors!</p>
+                <a href="{% url 'chat' %}" class="btn btn-primary">Chat With Dataset</a>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Humanitarian Data Incident Management [PDF File]</h4>
+            </div>
+            <div class="card-body">
+                <p>This resource from The Centre for Humanitarian Data outlines a structured approach to data incident management in humanitarian operations. It defines data incidents, explains a 5-step process (notification, classification, treatment, closure, knowledge base), and provides recommendations for improving data incident management practices in humanitarian organizations.</p>
+                <a href="{% url 'chat' %}" class="btn btn-primary">Ask About Data Incident Management</a>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Luxury Cars Image Dataset [Image Files]</h4>
+            </div>
+            <div class="card-body">
+                <p>This image collection features high-quality photographs of Rolls Royce and Tesla vehicles. The dataset includes various models, angles, and settings, allowing for visual comparison between traditional luxury automobiles and modern electric vehicles. Use our chat interface to ask questions to fetch images from the dataset.</p>
+                <a href="{% url 'chat' %}" class="btn btn-primary">Explore Car Images</a>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Linear Regression in 3 Minutes [Video File]</h4>
+            </div>
+            <div class="card-body">
+                <p>This concise educational video explains the core concepts of linear regression in just three minutes. It covers key principles like best-fit lines, coefficients, prediction, and the mathematical foundations of this fundamental statistical technique. Perfect for students and professionals who need a quick refresher on regression analysis.</p>
+                <a href="{% url 'chat' %}" class="btn btn-primary">Ask About Linear Regression</a>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Introduction to Machine Learning [DOC File]</h4>
+            </div>
+            <div class="card-body">
+                <p>This comprehensive document provides an introduction to machine learning fundamentals. It covers supervised and unsupervised learning, common algorithms, model evaluation techniques, and practical applications across various industries. Perfect for beginners who want to understand the core concepts of machine learning or professionals seeking a structured reference document.</p>
+                <a href="{% url 'chat' %}" class="btn btn-primary">Learn About Machine Learning</a>
+            </div>
+        </div>
+        
+        <h4>Upload To  Your Knowledge Base</h4>
+        <p>You can upload various file types to expand the bot's knowledge base:</p>
+        
+        <div class="row mt-4">
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">Document Files</div>
+                    <div class="card-body">
+                        <h5><i class="far fa-file-pdf mr-2"></i>PDF Files</h5>
+                        <p>Upload PDF documents containing text, tables, and images. Our system will extract and index the content.</p>
+                        <a href="{% url 'upload_pdf' %}" class="btn btn-primary btn-sm">Upload PDF</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">Office Documents</div>
+                    <div class="card-body">
+                        <h5><i class="far fa-file-word mr-2"></i>DOC Files</h5>
+                        <p>Upload Microsoft Word documents or other text documents to add to the knowledge base.</p>
+                        <a href="{% url 'upload_doc' %}" class="btn btn-primary btn-sm">Upload DOC</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">Data Files</div>
+                    <div class="card-body">
+                        <h5><i class="far fa-file-excel mr-2"></i>CSV Files</h5>
+                        <p>Upload CSV files containing structured data that can be queried for specific information.</p>
+                        <a href="{% url 'upload_csv' %}" class="btn btn-primary btn-sm">Upload CSV</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-3">
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">Media Files</div>
+                    <div class="card-body">
+                        <h5><i class="far fa-file-video mr-2"></i>Video Files</h5>
+                        <p>Upload video content that will be transcribed and added to the knowledge base.</p>
+                        <a href="{% url 'upload_video' %}" class="btn btn-primary btn-sm">Upload Video</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">Image Files</div>
+                    <div class="card-body">
+                        <h5><i class="far fa-file-image mr-2"></i>Image Files</h5>
+                        <p>Upload images with text or diagrams that will be processed with OCR technology.</p>
+                        <a href="{% url 'upload_image' %}" class="btn btn-primary btn-sm">Upload Image</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">Chat Interface</div>
+                    <div class="card-body">
+                        <h5><i class="fas fa-comments mr-2"></i>Start Chatting</h5>
+                        <p>Start interacting with your knowledge base through our intuitive chat interface.</p>
+                        <a href="{% url 'chat' %}" class="btn btn-success btn-sm">Go to Chat</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-5">
+            <h4>How It Works</h4>
+            <p>Our RAG (Retrieval-Augmented Generation) system combines traditional retrieval methods with advanced language models:</p>
+            <ol>
+                <li><strong>Upload:</strong> Add documents to create your personalized knowledge base</li>
+                <li><strong>Index:</strong> Our system processes and indexes your documents</li>
+                <li><strong>Retrieve:</strong> When you ask a question, relevant information is fetched from your documents</li>
+                <li><strong>Generate:</strong> The system creates comprehensive answers based on the retrieved information</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}

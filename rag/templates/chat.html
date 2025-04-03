@@ -1,0 +1,371 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h4 class="mb-0"><i class="bi bi-chat-dots mr-2"></i>RAG Chatbot</h4>
+                </div>
+                <div class="card-body chat-container" id="chatContainer" style="height: 450px; overflow-y: auto; background-color: #f9f9f9;">
+                    <!-- Messages will appear here -->
+                    <div class="system-message">
+                        <div class="d-flex">
+                            <span class="badge rounded-circle me-2" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background-color: #DFDFD9; color: #1A1A19;">
+                                <i class="bi bi-robot"></i>
+                            </span>
+                            <div class="message-text" style="background-color: #F9F8F4; border-radius: 10px; padding: 12px; max-width: 80%; border: 1px solid #1A1A19; color: #1A1A19;">
+                                <p class="mb-0">Hello! I'm your RAG assistant. I can provide information based on the documents in the knowledge base. How can I help you today?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer" style="background-color: #f5f5f5; border-top: 1px solid #ddd;">
+                    <form id="chatForm" method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="userMessage" name="message" placeholder="Type your question here..." required autofocus>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit"><i class="bi bi-send"></i> Send</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Related Images Card - Initially hidden -->
+            <div class="card shadow-sm mt-3" id="relatedImagesCard" style="display: none;">
+                <div class="card-header" style="background-color: #fff3cd;">
+                    <h5 class="mb-0"><i class="bi bi-images mr-2"></i>Related Images</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row" id="relatedImagesContainer">
+                        <!-- Images will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <!-- Available Datasets Card -->
+            <div class="card shadow-sm">
+                <div class="card-header" style="background-color: #fff3cd;">
+                    <h5 class="mb-0"><i class="bi bi-database mr-2"></i>Knowledge Base</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item p-2">
+                            <div class="d-flex flex-column">
+                                <div class="font-weight-bold mb-1">Students Grading Dataset</div>
+                                <div class="small text-muted mb-2">CSV | Academic performance data</div>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="askAbout('Tell me about the student grading dataset')">
+                                        <i class="bi bi-chat"></i> Query
+                                    </button>
+                                    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                                        <i class="bi bi-info-circle"></i> Details
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li class="list-group-item p-2">
+                            <div class="d-flex flex-column">
+                                <div class="font-weight-bold mb-1">Data Incident Management</div>
+                                <div class="small text-muted mb-2">PDF | Incident management</div>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="askAbout('Tell me about data incident management')">
+                                        <i class="bi bi-chat"></i> Query
+                                    </button>
+                                    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                                        <i class="bi bi-info-circle"></i> Details
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li class="list-group-item p-2">
+                            <div class="d-flex flex-column">
+                                <div class="font-weight-bold mb-1">Luxury Cars Collection</div>
+                                <div class="small text-muted mb-2">Images | Rolls Royce & Tesla & Nissan</div>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="askAbout('Show me Rolls Royce and Tesla and Nissan cars')">
+                                        <i class="bi bi-chat"></i> Query
+                                    </button>
+                                    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                                        <i class="bi bi-info-circle"></i> Details
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li class="list-group-item p-2">
+                            <div class="d-flex flex-column">
+                                <div class="font-weight-bold mb-1">Linear Regression</div>
+                                <div class="small text-muted mb-2">Video | 3-minute explanation</div>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="askAbout('Explain linear regression in 3 minutes')">
+                                        <i class="bi bi-chat"></i> Query
+                                    </button>
+                                    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                                        <i class="bi bi-info-circle"></i> Details
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li class="list-group-item p-2">
+                            <div class="d-flex flex-column">
+                                <div class="font-weight-bold mb-1">Machine Learning</div>
+                                <div class="small text-muted mb-2">DOC | Introduction & fundamentals</div>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="askAbout('Tell me about machine learning fundamentals')">
+                                        <i class="bi bi-chat"></i> Query
+                                    </button>
+                                    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                                        <i class="bi bi-info-circle"></i> Details
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <!-- Related Content Card -->
+            <div class="card mt-3 shadow-sm">
+                <div class="card-header" style="background-color: #fff3cd;">
+                    <h5 class="mb-0"><i class="bi bi-link-45deg mr-2"></i>Related Content</h5>
+                </div>
+                <div class="card-body" id="relatedContentContainer">
+                    <!-- Related content will appear here -->
+                    <p class="text-muted text-center">
+                        <i class="bi bi-arrow-left-circle"></i>
+                        Ask a question to see related content
+                    </p>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+<!-- Link to Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const chatContainer = document.getElementById('chatContainer');
+    const chatForm = document.getElementById('chatForm');
+    const userMessageInput = document.getElementById('userMessage');
+    const relatedContentContainer = document.getElementById('relatedContentContainer');
+    
+    // Function to ask about a specific topic
+    window.askAbout = function(topic) {
+        userMessageInput.value = topic;
+        chatForm.dispatchEvent(new Event('submit'));
+    };
+    
+    // Function to add a message to the chat
+    function addMessage(message, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = isUser ? 'user-message my-3' : 'bot-message my-3';
+        
+        // Add user avatar or bot icon
+        const iconDiv = document.createElement('div');
+        iconDiv.className = 'd-flex';
+        
+        const iconSpan = document.createElement('span');
+        iconSpan.className = isUser ? 'badge rounded-circle me-2' : 'badge rounded-circle me-2';
+        iconSpan.style.width = '36px';
+        iconSpan.style.height = '36px';
+        iconSpan.style.display = 'flex';
+        iconSpan.style.alignItems = 'center';
+        iconSpan.style.justifyContent = 'center';
+        iconSpan.style.backgroundColor = isUser ? '#fff3cd' : '#DFDFD9';
+        iconSpan.style.color = '#1A1A19';
+        iconSpan.innerHTML = isUser ? '<i class="bi bi-person-fill"></i>' : '<i class="bi bi-robot"></i>';
+        
+        const textDiv = document.createElement('div');
+        textDiv.className = 'message-text';
+        textDiv.style.backgroundColor = isUser ? '#fff3cd' : '#F9F8F4';
+        textDiv.style.borderRadius = '12px';
+        textDiv.style.padding = '12px';
+        textDiv.style.maxWidth = '80%';
+        textDiv.style.border = '1px solid #1A1A19';
+        textDiv.style.color = '#1A1A19';
+        textDiv.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        
+        // Convert markdown to HTML for bot messages (simple implementation)
+        if (!isUser) {
+            // Handle code blocks
+            message = message.replace(/```([^`]+)```/g, '<pre style="background-color: #f0f0f0; padding: 8px; border-radius: 5px; overflow-x: auto;"><code>$1</code></pre>');
+            // Handle bold
+            message = message.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+            // Handle italic
+            message = message.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+        }
+        
+        textDiv.innerHTML = message;
+        
+        iconDiv.appendChild(iconSpan);
+        iconDiv.appendChild(textDiv);
+        messageDiv.appendChild(iconDiv);
+        
+        chatContainer.appendChild(messageDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    
+    // Function to show related content
+    function showRelatedContent(relatedItems) {
+        // Clear previous content
+        relatedContentContainer.innerHTML = '';
+        const relatedImagesCard = document.getElementById('relatedImagesCard');
+        const relatedImagesContainer = document.getElementById('relatedImagesContainer');
+        relatedImagesContainer.innerHTML = '';
+        relatedImagesCard.style.display = 'none';
+        
+        if (relatedItems.length === 0) {
+            relatedContentContainer.innerHTML = '<p class="text-muted text-center"><i class="bi bi-exclamation-circle"></i><br>No related content found</p>';
+            return;
+        }
+        
+        let hasImages = false;
+        
+        // Process each related item
+        relatedItems.forEach(item => {
+            // Display images if available
+            if (item.image) {
+                hasImages = true;
+                const imagesTitle = document.createElement('h6');
+                imagesTitle.className = 'mt-3 mb-2 border-bottom pb-2';
+                imagesTitle.innerHTML = '<i class="bi bi-image mr-1"></i> Related Images:';
+                relatedContentContainer.appendChild(imagesTitle);
+                
+                // Check if image is an array, if not convert to array
+                const imageArray = Array.isArray(item.image) ? item.image : [item.image];
+                
+                // Add each image from the array
+                imageArray.forEach((imgBase64, index) => {
+                    if (imgBase64) {
+                        // Add to sidebar
+                        const imgDiv = document.createElement('div');
+                        imgDiv.className = 'related-item mb-3 text-center';
+                        
+                        const img = document.createElement('img');
+                        img.src = imgBase64.startsWith('data:') ? imgBase64 : `data:image/png;base64,${imgBase64}`;
+                        img.className = 'img-fluid mb-2 rounded';
+                        img.style.maxHeight = '150px';
+                        img.style.border = '1px solid #1A1A19';
+                        img.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                        imgDiv.appendChild(img);
+                        
+                        relatedContentContainer.appendChild(imgDiv);
+                        
+                        // Also add to the images card below chat
+                        const colDiv = document.createElement('div');
+                        colDiv.className = 'col-md-4 mb-3';
+                        
+                        const imgCard = document.createElement('div');
+                        imgCard.className = 'card h-100';
+                        
+                        const imgCardBody = document.createElement('div');
+                        imgCardBody.className = 'card-body text-center';
+                        
+                        const largeImg = document.createElement('img');
+                        largeImg.src = imgBase64.startsWith('data:') ? imgBase64 : `data:image/png;base64,${imgBase64}`;
+                        largeImg.className = 'img-fluid rounded';
+                        largeImg.style.maxHeight = '200px';
+                        largeImg.style.border = '1px solid #1A1A19';
+                        largeImg.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                        
+                        imgCardBody.appendChild(largeImg);
+                        imgCard.appendChild(imgCardBody);
+                        colDiv.appendChild(imgCard);
+                        
+                        relatedImagesContainer.appendChild(colDiv);
+                    }
+                });
+                
+                // Show the images card
+                relatedImagesCard.style.display = 'block';
+            }
+            
+            // Display text context if available
+            if (item.text) {
+                const textTitle = document.createElement('h6');
+                textTitle.className = 'mt-3 mb-2 border-bottom pb-2';
+                textTitle.innerHTML = '<i class="bi bi-text-paragraph mr-1"></i> Context:';
+                relatedContentContainer.appendChild(textTitle);
+                
+                const textDiv = document.createElement('div');
+                textDiv.className = 'related-item mb-3';
+                
+                const text = document.createElement('p');
+                text.className = 'small mb-0 p-2 bg-light rounded';
+                text.style.border = '1px solid #ddd';
+                text.textContent = item.text;
+                textDiv.appendChild(text);
+                
+                relatedContentContainer.appendChild(textDiv);
+            }
+        });
+    }
+    
+    // Handle form submission
+    chatForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const userMessage = userMessageInput.value.trim();
+        
+        if (userMessage === '') return;
+        
+        // Add user message to chat
+        addMessage(userMessage, true);
+        
+        // Clear input
+        userMessageInput.value = '';
+        
+        // Add loading indicator
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'bot-message my-3';
+        loadingDiv.innerHTML = '<div class="d-flex"><span class="badge rounded-circle me-2" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background-color: #DFDFD9; color: #1A1A19;"><i class="bi bi-robot"></i></span><div class="message-text" style="background-color: #F9F8F4; border-radius: 12px; padding: 12px; max-width: 80%; border: 1px solid #1A1A19; color: #1A1A19; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"><div class="d-flex align-items-center"><div class="spinner-border spinner-border-sm mr-2" role="status" style="color: #F9BE08;"></div> Thinking...</div></div></div>';
+        chatContainer.appendChild(loadingDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        
+        // Send request to server
+        fetch('', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: new URLSearchParams({
+                'message': userMessage
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Remove loading indicator
+            chatContainer.removeChild(loadingDiv);
+            
+            // Add bot response to chat
+            addMessage(data.message);
+            
+            // Show related content
+            showRelatedContent(data.related || []);
+        })
+        .catch(error => {
+            // Remove loading indicator
+            chatContainer.removeChild(loadingDiv);
+            
+            // Add error message
+            addMessage('Sorry, there was an error processing your request. Please try again.');
+            console.error('Error:', error);
+        });
+    });
+});
+</script>
+{% endblock %}

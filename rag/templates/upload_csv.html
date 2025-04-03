@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload CSV Data{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header" style="background-color: #fff3cd;">
+                    <h4 class="mb-0"><i class="bi bi-file-earmark-spreadsheet mr-2"></i>Upload CSV Data</h4>
+                </div>
+                <div class="card-body">
+                    {% if status %}
+                        <div class="alert {% if status == 'success' %}alert-success{% else %}alert-danger{% endif %} mb-4">
+                            <i class="bi {% if status == 'success' %}bi-check-circle{% else %}bi-exclamation-triangle{% endif %} mr-2"></i>
+                            {{ message }}
+                        </div>
+                    {% endif %}
+
+                    <form method="POST" action="{% url 'upload_csv' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group mb-4">
+                            <label for="csv_file" class="form-label"><i class="bi bi-file-earmark-spreadsheet mr-1"></i> Select CSV File:</label>
+                            <input type="file" class="form-control" id="csv_file" name="csv_file" accept=".csv" required>
+                            <small class="form-text text-muted">Upload CSV data files with headers in the first row</small>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'home' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left mr-1"></i> Back to Home
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-cloud-upload mr-1"></i> Upload CSV
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm mt-4">
+                <div class="card-header" style="background-color: #fff3cd;">
+                    <h5 class="mb-0"><i class="bi bi-info-circle mr-2"></i>About CSV Upload</h5>
+                </div>
+                <div class="card-body">
+                    <p>Upload structured data in CSV format to add to your knowledge base. The system will process the tabular data and make it queryable through the chat interface.</p>
+                    <p class="mb-0">After uploading, you can ask questions about the data, request statistics, or analyze trends using the RAG chatbot.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
